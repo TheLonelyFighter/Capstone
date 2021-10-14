@@ -20,3 +20,5 @@ def hpf(arr, fs, lf, order):
 # Moving average filter
 def moving_average(s, w):           # s = signal, w = window
     return np.convolve(s, np.ones(w), 'valid') / w    
+
+    ######
