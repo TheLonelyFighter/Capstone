@@ -19,8 +19,9 @@ def get_filename():
     # response = ntp_client.request('pool.ntp.org')
     #use local time, otherwise timeout from server will terminate program
     timestamp = time.ctime()
+    print(timestamp) 
     array = timestamp.split(" ")
-    timestamp = array[4] + "_" + array[3] + "-" + array[1] + "-" + array[5]
+    timestamp = array[4] + "_" + array[3] + "-" + array[1] + "-" + array[2]
     return timestamp
 # create pyaudio stream
 
