@@ -8,10 +8,9 @@ def hpf(arr, fs, lf, order):
 
     return signal.filtfilt(bbut, abut, arr)
 #the function is otherwise the same as in the ML_model folder but now the function returns a list
-def get_features(sig):
-    fs = 44100
-    features = ["RMS", "RMS_filt", "Spectral_centroid", "Spectral_centroid_filt",\
-                "Zero-Cross", "Zero-Cross_filt", "Spectral_slope", \
+def get_features(sig,fs=44100):
+    features = ["RMS", "RMS_filt","Zero-Cross", "Zero-Cross_filt", "Spectral_centroid",\
+                "Spectral_centroid_filt", "Spectral_slope", \
                     "Spectral_slope_filt", "Spectral_spread", \
                         "Spectral_spread_filt", "STD", "STD_filt"]
 

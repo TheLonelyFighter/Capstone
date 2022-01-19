@@ -6,7 +6,7 @@ from sklearn.neighbors import KNeighborsClassifier
 cwd = os.getcwd()
 files = os.listdir(cwd)
 print("Files in %r: %s" % (cwd, files))
-data_path = cwd+"/Test_frame/KNN_model/DataFrame_01_12.csv"
+data_path = cwd+"/Test_frame/KNN_model/df-4_wl-3s_19.1.2022.csv"
 data = pd.read_csv(data_path)
 
 def getSamplesAndLabels(data,variables,label):
