@@ -56,11 +56,11 @@ def main():
         #concatenate the audio samples and extract features
         #big_chungus is a large audiosample in as a numpy array
         big_chungus = np.concatenate(recordings)
-        #print(big_chungus)
+        print("frame length:",len(big_chungus))
         
         #extract features using tsfel and other libraries
         features = get_features(big_chungus)
-        print("features:",features)
+        #print("features:",features)
         #Use knn to classify the audiosamples and other features i.e. temps, humidity, speed etc.
         predicted_road_type=knn_classifier.predict([features])
         #print the road condition
