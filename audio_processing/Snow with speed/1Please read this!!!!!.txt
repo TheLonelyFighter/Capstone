@@ -1,0 +1,7 @@
+These samples are not 3 seconds long they are 2.9721 seconds long. 
+Because of the chunksize we cannot use the whole sample for feature extraction. 
+When we record three times 1s in the prototype we get about 2.7s of data so we 
+need to prune the unnecessary end from these samples when we create a dataset
+for model training!!!!!!!!!!
+We need only 122880 samples from these files and then downsample the data down to 30720 samples with decimation facter of 4
+Also there might be missing values with the speeds so use the audiofiles that have an id in the speeds file.
