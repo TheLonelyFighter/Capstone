@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useRoute } from '@react-navigation/native';
 import { useLocation } from 'react-router-dom';
+import { useTimer } from 'react-timer-hook';
+import DeviceInfo from 'react-native-device-info';
 
 import {
   SafeAreaView,
@@ -13,14 +15,13 @@ import {
   Platform,
   Button,
   Alert,
+  ImageBackground,
 } from 'react-native';
 import Constants from 'expo-constants';
 import * as Location from 'expo-location';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { CSVLink, CSVDownload } from 'react-csv';
-import Geolocation from 'react-native-geolocation-service';
-import GetLocation from 'react-native-get-location';
 
 function HomeScreen({ navigation }) {
   return (
@@ -47,14 +48,14 @@ function HomeScreen({ navigation }) {
 function GetCoordinates({ navigation }) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>getLocation()</Text>
+      <Text>{getLocationExpoLocation()}</Text>
     </View>
   );
 }
 function GetDates({ navigation }) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>{getCurrentDate()}</Text>
+      <Text>{Time()}</Text>
       <Button title="Go back" onPress={() => navigation.goBack()} />
     </View>
   );
@@ -109,293 +110,680 @@ function DetailsScreen({ navigation }) {
 
 function BlackIce({ navigation }) {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <View style={styles.container}>
       <Button
         title="Go to Home"
         onPress={() => navigation.navigate('Capstone')}
       />
       <Button title="Go back" onPress={() => navigation.goBack()} />
-      <CSVLink data={csvBlack}>Export as .csv-file</CSVLink>
+      <ImageBackground
+        source={require('./assets/black_ice_cc.jpg')}
+        resizeMode="cover"
+        style={styles.image}>
+        <Text style={styles.text}>
+          <CSVLink
+            data={[
+              [
+                'Date',
+                new Date().getDate() +
+                  '-' +
+                  (new Date().getMonth() + 1) +
+                  '-' +
+                  new Date().getFullYear(),
+              ],
+              [
+                'Time',
+                getHourZeros() +
+                  ':' +
+                  getMinuteZeros() +
+                  ':' +
+                  getSecondZeros(),
+              ],
+              ['Coordinates', getLocationExpoLocation()],
+              ['Type', 'Black Ice'],
+            ]}
+            filename={'start_' + getDateTime() + '_black_ice.csv'}>
+            {Time()}
+            Start
+          </CSVLink>
+        </Text>
+        <Text style={styles.text_2}>
+          <CSVLink
+            data={[
+              [
+                'Date',
+                new Date().getDate() +
+                  '-' +
+                  (new Date().getMonth() + 1) +
+                  '-' +
+                  new Date().getFullYear(),
+              ],
+              [
+                'Time',
+                getHourZeros() +
+                  ':' +
+                  getMinuteZeros() +
+                  ':' +
+                  getSecondZeros(),
+              ],
+              ['Coordinates', getLocationExpoLocation()],
+              ['Type', 'Black Ice'],
+            ]}
+            filename={'stop_' + getDateTime() + '_black_ice.csv'}>
+            {Time()}
+            Stop
+          </CSVLink>
+        </Text>
+      </ImageBackground>
     </View>
   );
 }
 function SandOnIce({ navigation }) {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <View style={styles.container}>
       <Button
         title="Go to Home"
         onPress={() => navigation.navigate('Capstone')}
       />
       <Button title="Go back" onPress={() => navigation.goBack()} />
-      <CSVLink data={csvSand}>Export as .csv-file</CSVLink>
+      <ImageBackground
+        source={require('./assets/sand_on_ice_cc.jpg')}
+        resizeMode="cover"
+        style={styles.image}>
+        <Text style={styles.text}>
+          <CSVLink
+            data={[
+              [
+                'Date',
+                new Date().getDate() +
+                  '-' +
+                  (new Date().getMonth() + 1) +
+                  '-' +
+                  new Date().getFullYear(),
+              ],
+              [
+                'Time',
+                getHourZeros() +
+                  ':' +
+                  getMinuteZeros() +
+                  ':' +
+                  getSecondZeros(),
+              ],
+              ['Coordinates', getLocationExpoLocation()],
+              ['Type', 'Sand On Ice'],
+            ]}
+            filename={'start_' + getDateTime() + '_sand_on_ice.csv'}>
+            {Time()}
+            Start
+          </CSVLink>
+        </Text>
+        <Text style={styles.text_2}>
+          <CSVLink
+            data={[
+              [
+                'Date',
+                new Date().getDate() +
+                  '-' +
+                  (new Date().getMonth() + 1) +
+                  '-' +
+                  new Date().getFullYear(),
+              ],
+              [
+                'Time',
+                getHourZeros() +
+                  ':' +
+                  getMinuteZeros() +
+                  ':' +
+                  getSecondZeros(),
+              ],
+              ['Coordinates', getLocationExpoLocation()],
+              ['Type', 'Sand On Ice'],
+            ]}
+            filename={'stop_' + getDateTime() + '_sand_on_ice.csv'}>
+            {Time()}
+            Stop
+          </CSVLink>
+        </Text>
+      </ImageBackground>
     </View>
   );
 }
 function Ice({ navigation }) {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <View style={styles.container}>
       <Button
         title="Go to Home"
         onPress={() => navigation.navigate('Capstone')}
       />
       <Button title="Go back" onPress={() => navigation.goBack()} />
-      <CSVLink data={csvIce}>Export as .csv-file</CSVLink>
+      <ImageBackground
+        source={require('./assets/ice_road_cc.jpg')}
+        resizeMode="cover"
+        style={styles.image}>
+        <Text style={styles.text}>
+          <CSVLink
+            data={[
+              [
+                'Date',
+                new Date().getDate() +
+                  '-' +
+                  (new Date().getMonth() + 1) +
+                  '-' +
+                  new Date().getFullYear(),
+              ],
+              [
+                'Time',
+                getHourZeros() +
+                  ':' +
+                  getMinuteZeros() +
+                  ':' +
+                  getSecondZeros(),
+              ],
+              ['Coordinates', getLocationExpoLocation()],
+              ['Type', 'Ice'],
+            ]}
+            filename={'start_' + getDateTime() + '_ice.csv'}>
+            {Time()}
+            Start
+          </CSVLink>
+        </Text>
+        <Text style={styles.text_2}>
+          <CSVLink
+            data={[
+              [
+                'Date',
+                new Date().getDate() +
+                  '-' +
+                  (new Date().getMonth() + 1) +
+                  '-' +
+                  new Date().getFullYear(),
+              ],
+              [
+                'Time',
+                getHourZeros() +
+                  ':' +
+                  getMinuteZeros() +
+                  ':' +
+                  getSecondZeros(),
+              ],
+              ['Coordinates', getLocationExpoLocation()],
+              ['Type', 'Ice'],
+            ]}
+            filename={'stop_' + getDateTime() + '_ice.csv'}>
+            {Time()}
+            Stop
+          </CSVLink>
+        </Text>
+      </ImageBackground>
     </View>
   );
 }
 function DryAsphalt({ navigation }) {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <View style={styles.container}>
       <Button
         title="Go to Home"
         onPress={() => navigation.navigate('Capstone')}
       />
       <Button title="Go back" onPress={() => navigation.goBack()} />
-      <CSVLink data={csvDryAsphalt}>Export as .csv-file</CSVLink>
+      <ImageBackground
+        source={require('./assets/Dry_asphalt_cc.jpg')}
+        resizeMode="cover"
+        style={styles.image}>
+        <Text style={styles.text}>
+          <CSVLink
+            data={[
+              [
+                'Date',
+                new Date().getDate() +
+                  '-' +
+                  (new Date().getMonth() + 1) +
+                  '-' +
+                  new Date().getFullYear(),
+              ],
+              [
+                'Time',
+                getHourZeros() +
+                  ':' +
+                  getMinuteZeros() +
+                  ':' +
+                  getSecondZeros(),
+              ],
+              ['Coordinates', getLocationExpoLocation()],
+              ['Type', 'Dry Asphalt'],
+            ]}
+            filename={'start_' + getDateTime() + '_dry_asphalt.csv'}>
+            {Time()}
+            Start
+          </CSVLink>
+        </Text>
+        <Text style={styles.text_2}>
+          <CSVLink
+            data={[
+              [
+                'Date',
+                new Date().getDate() +
+                  '-' +
+                  (new Date().getMonth() + 1) +
+                  '-' +
+                  new Date().getFullYear(),
+              ],
+              [
+                'Time',
+                getHourZeros() +
+                  ':' +
+                  getMinuteZeros() +
+                  ':' +
+                  getSecondZeros(),
+              ],
+              ['Coordinates', getLocationExpoLocation()],
+              ['Type', 'Dry Asphalt'],
+            ]}
+            filename={'stop_' + getDateTime() + '_dry_asphalt.csv'}>
+            {Time()}
+            Stop
+          </CSVLink>
+        </Text>
+      </ImageBackground>
     </View>
   );
 }
 function WetAsphalt({ navigation }) {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <View style={styles.container}>
       <Button
         title="Go to Home"
         onPress={() => navigation.navigate('Capstone')}
       />
       <Button title="Go back" onPress={() => navigation.goBack()} />
-      <CSVLink data={csvWetAsphalt}>Export as .csv-file</CSVLink>
+      <ImageBackground
+        source={require('./assets/wet_asphalt_cc.jpg')}
+        resizeMode="cover"
+        style={styles.image}>
+        <Text style={styles.text}>
+          <CSVLink
+            data={[
+              [
+                'Date',
+                new Date().getDate() +
+                  '-' +
+                  (new Date().getMonth() + 1) +
+                  '-' +
+                  new Date().getFullYear(),
+              ],
+              [
+                'Time',
+                getHourZeros() +
+                  ':' +
+                  getMinuteZeros() +
+                  ':' +
+                  getSecondZeros(),
+              ],
+              ['Coordinates', getLocationExpoLocation()],
+              ['Type', 'Wet Asphalt'],
+            ]}
+            filename={'start_' + getDateTime() + '_wet_asphalt.csv'}>
+            {Time()}
+            Start
+          </CSVLink>
+        </Text>
+        <Text style={styles.text_2}>
+          <CSVLink
+            data={[
+              [
+                'Date',
+                new Date().getDate() +
+                  '-' +
+                  (new Date().getMonth() + 1) +
+                  '-' +
+                  new Date().getFullYear(),
+              ],
+              [
+                'Time',
+                getHourZeros() +
+                  ':' +
+                  getMinuteZeros() +
+                  ':' +
+                  getSecondZeros(),
+              ],
+              ['Coordinates', getLocationExpoLocation()],
+              ['Type', 'Wet Asphalt'],
+            ]}
+            filename={'stop_' + getDateTime() + '_wet_asphalt.csv'}>
+            {Time()}
+            Stop
+          </CSVLink>
+        </Text>
+      </ImageBackground>
     </View>
   );
 }
 function Gravel({ navigation }) {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <View style={styles.container}>
       <Button
         title="Go to Home"
         onPress={() => navigation.navigate('Capstone')}
       />
       <Button title="Go back" onPress={() => navigation.goBack()} />
-      <CSVLink data={csvGravel}>Export as .csv-file</CSVLink>
+      <ImageBackground
+        source={require('./assets/gravel_cc.jpg')}
+        resizeMode="cover"
+        style={styles.image}>
+        <Text style={styles.text}>
+          <CSVLink
+            data={[
+              [
+                'Date',
+                new Date().getDate() +
+                  '-' +
+                  (new Date().getMonth() + 1) +
+                  '-' +
+                  new Date().getFullYear(),
+              ],
+              [
+                'Time',
+                getHourZeros() +
+                  ':' +
+                  getMinuteZeros() +
+                  ':' +
+                  getSecondZeros(),
+              ],
+              ['Coordinates', getLocationExpoLocation()],
+              ['Type', 'Gravel'],
+            ]}
+            filename={'start_' + getDateTime() + '_gravel.csv'}>
+            {Time()}
+            Start
+          </CSVLink>
+        </Text>
+        <Text style={styles.text_2}>
+          <CSVLink
+            data={[
+              [
+                'Date',
+                new Date().getDate() +
+                  '-' +
+                  (new Date().getMonth() + 1) +
+                  '-' +
+                  new Date().getFullYear(),
+              ],
+              [
+                'Time',
+                getHourZeros() +
+                  ':' +
+                  getMinuteZeros() +
+                  ':' +
+                  getSecondZeros(),
+              ],
+              ['Coordinates', getLocationExpoLocation()],
+              ['Type', 'Gravel'],
+            ]}
+            filename={'stop_' + getDateTime() + '_gravel.csv'}>
+            {Time()}
+            Stop
+          </CSVLink>
+        </Text>
+      </ImageBackground>
     </View>
   );
 }
 function SandOnAsphalt({ navigation }) {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <View style={styles.container}>
       <Button
         title="Go to Home"
         onPress={() => navigation.navigate('Capstone')}
       />
       <Button title="Go back" onPress={() => navigation.goBack()} />
-      <CSVLink data={csvSandOnAsphalt}>Export as .csv-file</CSVLink>
+      <ImageBackground
+        source={require('./assets/sand_on_asphalt_cc.jpg')}
+        resizeMode="cover"
+        style={styles.image}>
+        <Text style={styles.text}>
+          <CSVLink
+            data={[
+              [
+                'Date',
+                new Date().getDate() +
+                  '-' +
+                  (new Date().getMonth() + 1) +
+                  '-' +
+                  new Date().getFullYear(),
+              ],
+              [
+                'Time',
+                getHourZeros() +
+                  ':' +
+                  getMinuteZeros() +
+                  ':' +
+                  getSecondZeros(),
+              ],
+              ['Coordinates', getLocationExpoLocation()],
+              ['Type', 'Sand On Asphalt'],
+            ]}
+            filename={'start_' + getDateTime() + '_sand_on_asphalt.csv'}>
+            {Time()}
+            Start
+          </CSVLink>
+        </Text>
+        <Text style={styles.text_2}>
+          <CSVLink
+            data={[
+              [
+                'Date',
+                new Date().getDate() +
+                  '-' +
+                  (new Date().getMonth() + 1) +
+                  '-' +
+                  new Date().getFullYear(),
+              ],
+              [
+                'Time',
+                getHourZeros() +
+                  ':' +
+                  getMinuteZeros() +
+                  ':' +
+                  getSecondZeros(),
+              ],
+              ['Coordinates', getLocationExpoLocation()],
+              ['Type', 'Sand On Asphalt'],
+            ]}
+            filename={'stop_' + getDateTime() + '_sand_on_asphalt.csv'}>
+            {Time()}
+            Stop
+          </CSVLink>
+        </Text>
+      </ImageBackground>
     </View>
   );
 }
 function SnowyGravel({ navigation }) {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <View style={styles.container}>
       <Button
         title="Go to Home"
         onPress={() => navigation.navigate('Capstone')}
       />
       <Button title="Go back" onPress={() => navigation.goBack()} />
-      <CSVLink data={csvSnowyGravel}>Export as .csv-file</CSVLink>
+      <ImageBackground
+        source={require('./assets/snowy_gravel_cc.jpg')}
+        resizeMode="cover"
+        style={styles.image}>
+        <Text style={styles.text}>
+          <CSVLink
+            data={[
+              [
+                'Date',
+                new Date().getDate() +
+                  '-' +
+                  (new Date().getMonth() + 1) +
+                  '-' +
+                  new Date().getFullYear(),
+              ],
+              [
+                'Time',
+                getHourZeros() +
+                  ':' +
+                  getMinuteZeros() +
+                  ':' +
+                  getSecondZeros(),
+              ],
+              ['Coordinates', getLocationExpoLocation()],
+              ['Type', 'Snowy Gravel'],
+            ]}
+            filename={'start_' + getDateTime() + '_snowy_gravel.csv'}>
+            {Time()}
+            Start
+          </CSVLink>
+        </Text>
+        <Text style={styles.text_2}>
+          <CSVLink
+            data={[
+              [
+                'Date',
+                new Date().getDate() +
+                  '-' +
+                  (new Date().getMonth() + 1) +
+                  '-' +
+                  new Date().getFullYear(),
+              ],
+              [
+                'Time',
+                getHourZeros() +
+                  ':' +
+                  getMinuteZeros() +
+                  ':' +
+                  getSecondZeros(),
+              ],
+              ['Coordinates', getLocationExpoLocation()],
+              ['Type', 'Snowy Gravel'],
+            ]}
+            filename={'stop_' + getDateTime() + '_snowy_gravel.csv'}>
+            {Time()}
+            Stop
+          </CSVLink>
+        </Text>
+      </ImageBackground>
     </View>
   );
 }
 
-const getLocation = () => {
-  return GetLocation.getCurrentPosition({
-    enableHighAccuracy: true,
-    timeout: 15000,
-  })
-    .then((location) => {
-      console.log(location);
-    })
-    .catch((error) => {
-      const { code, message } = error;
-      console.warn(code, message);
-    });
-};
-const getCurrentDate = () => {
-  var date = new Date().getDate();
-  var month = new Date().getMonth() + 1;
-  var year = new Date().getFullYear();
-  var hours = new Date().getHours();
-  var min = new Date().getMinutes();
-  var sec = new Date().getSeconds();
-  return date + '-' + month + '-' + year + ' ' + hours + ':' + min + ':' + sec;
-};
+function getLocationExpoLocation() {
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      if (Platform.OS === 'android' && !Constants.isDevice) {
+        setErrorMsg(
+          'Oops, this will not work on Snack in an Android emulator. Try it on your device!'
+        );
+        return;
+      }
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+    })();
+  }, []);
+
+  let text = 'Waiting..';
+  if (errorMsg) {
+    text = errorMsg;
+  } else if (location) {
+    longitude = JSON.stringify(location.coords.longitude);
+    latitude = JSON.stringify(location.coords.latitude);
+    speed = JSON.stringify(location.coords.speed);
+    text =
+      ' Longitude: ' +
+      longitude +
+      '\n Latitude: ' +
+      latitude +
+      '\n Speed: ' +
+      speed;
+  }
+  return text;
+}
+
+function getDateTime() {
+  var now = new Date();
+  var year = now.getFullYear();
+  var month = now.getMonth() + 1;
+  var day = now.getDate();
+  var hour = now.getHours();
+  var minute = now.getMinutes();
+  var second = now.getSeconds();
+  if (month.toString().length == 1) {
+    month = '0' + month;
+  }
+  if (day.toString().length == 1) {
+    day = '0' + day;
+  }
+  if (hour.toString().length == 1) {
+    hour = '0' + hour;
+  }
+  if (minute.toString().length == 1) {
+    minute = '0' + minute;
+  }
+  if (second.toString().length == 1) {
+    second = '0' + second;
+  }
+  var dateTime =
+    day + '_' + month + '_' + year + '_' + hour + '_' + minute + '_' + second;
+  return dateTime;
+}
+
+function getHourZeros() {
+  var now = new Date();
+  var hour = now.getHours();
+
+  if (hour.toString().length == 1) {
+    hour = '0' + hour;
+  }
+
+  return hour;
+}
+
+function getSecondZeros() {
+  var now = new Date();
+  var sec = now.getSeconds();
+
+  if (sec.toString().length == 1) {
+    sec = '0' + sec;
+  }
+
+  return sec;
+}
+
+function getMinuteZeros() {
+  var now = new Date();
+  var min = now.getMinutes();
+
+  if (min.toString().length == 1) {
+    min = '0' + min;
+  }
+
+  return min;
+}
+
+function Time() {
+  const [time, setTime] = React.useState(new Date());
+
+  React.useEffect(() => {
+    setInterval(() => {
+      setTime(new Date());
+    }, 1000);
+  }, []);
+
+  return <span>{time.toLocaleTimeString().split('.').join('_')} </span>;
+}
 
 const Stack = createNativeStackNavigator();
-
-const csvSand = [
-  [
-    'Date',
-    new Date().getDate() +
-      '-' +
-      (new Date().getMonth() + 1) +
-      '-' +
-      new Date().getFullYear(),
-  ],
-  [
-    'Time',
-    new Date().getHours() +
-      ':' +
-      new Date().getMinutes() +
-      ':' +
-      new Date().getSeconds(),
-  ],
-  ['Coordinates', getLocation()],
-  ['Type', 'Sand On Ice'],
-];
-
-const csvBlack = [
-  [
-    'Date',
-    new Date().getDate() +
-      '-' +
-      (new Date().getMonth() + 1) +
-      '-' +
-      new Date().getFullYear(),
-  ],
-  [
-    'Time',
-    new Date().getHours() +
-      ':' +
-      new Date().getMinutes() +
-      ':' +
-      new Date().getSeconds(),
-  ],
-  ['Coordinates', getLocation()],
-  ['Type', 'Black Ice'],
-];
-
-const csvIce = [
-  [
-    'Date',
-    new Date().getDate() +
-      '-' +
-      (new Date().getMonth() + 1) +
-      '-' +
-      new Date().getFullYear(),
-  ],
-  [
-    'Time',
-    new Date().getHours() +
-      ':' +
-      new Date().getMinutes() +
-      ':' +
-      new Date().getSeconds(),
-  ],
-  ['Coordinates', getLocation()],
-  ['Type', 'Ice'],
-];
-
-const csvWetAsphalt = [
-  [
-    'Date',
-    new Date().getDate() +
-      '-' +
-      (new Date().getMonth() + 1) +
-      '-' +
-      new Date().getFullYear(),
-  ],
-  [
-    'Time',
-    new Date().getHours() +
-      ':' +
-      new Date().getMinutes() +
-      ':' +
-      new Date().getSeconds(),
-  ],
-  ['Coordinates', getLocation()],
-  ['Type', 'Wet Asphalt'],
-];
-
-const csvDryAsphalt = [
-  [
-    'Date',
-    new Date().getDate() +
-      '-' +
-      (new Date().getMonth() + 1) +
-      '-' +
-      new Date().getFullYear(),
-  ],
-  [
-    'Time',
-    new Date().getHours() +
-      ':' +
-      new Date().getMinutes() +
-      ':' +
-      new Date().getSeconds(),
-  ],
-  ['Coordinates', getLocation()],
-  ['Type', 'Dry Asphalt'],
-];
-
-const csvSandOnAsphalt = [
-  [
-    'Date',
-    new Date().getDate() +
-      '-' +
-      (new Date().getMonth() + 1) +
-      '-' +
-      new Date().getFullYear(),
-  ],
-  [
-    'Time',
-    new Date().getHours() +
-      ':' +
-      new Date().getMinutes() +
-      ':' +
-      new Date().getSeconds(),
-  ],
-  ['Coordinates', getLocation()],
-  ['Type', 'Sand On Asphalt'],
-];
-
-const csvSnowyGravel = [
-  [
-    'Date',
-    new Date().getDate() +
-      '-' +
-      (new Date().getMonth() + 1) +
-      '-' +
-      new Date().getFullYear(),
-  ],
-  [
-    'Time',
-    new Date().getHours() +
-      ':' +
-      new Date().getMinutes() +
-      ':' +
-      new Date().getSeconds(),
-  ],
-  ['Coordinates', getLocation()],
-  ['Type', 'Snowy Gravel'],
-];
-
-const csvGravel = [
-  [
-    'Date',
-    new Date().getDate() +
-      '-' +
-      (new Date().getMonth() + 1) +
-      '-' +
-      new Date().getFullYear(),
-  ],
-  [
-    'Time',
-    new Date().getHours() +
-      ':' +
-      new Date().getMinutes() +
-      ':' +
-      new Date().getSeconds(),
-  ],
-  ['Coordinates', getLocation()],
-  ['Type', 'Gravel'],
-];
 
 function App() {
   return (
@@ -417,5 +805,37 @@ function App() {
     </NavigationContainer>
   );
 }
+
+const styles = StyleSheet.create({
+  top: {
+    flex: 0.3,
+    borderWidth: 5,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+  },
+  container: {
+    flex: 1,
+  },
+  image: {
+    flex: 1,
+    justifyContent: 'top',
+  },
+  text: {
+    color: 'white',
+    fontSize: 25,
+    lineHeight: 80,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    backgroundColor: 'white',
+  },
+  text_2: {
+    color: 'white',
+    fontSize: 25,
+    lineHeight: 80,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    backgroundColor: 'red',
+  },
+});
 
 export default App;

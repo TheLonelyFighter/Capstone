@@ -20,14 +20,15 @@
     "expo-constants": "~11.0.2",
     "react-navigation": "*",
     "react-router-dom": "*",
+    "react-timer-hook": "*",
     "react-native-paper": "3.6.0",
     "react-native-screens": "~3.4.0",
+    "react-native-location": "*",
+    "react-native-clock-sync": "*",
     "@react-navigation/native": "*",
-    "react-native-get-location": "*",
+    "react-native-device-info": "*",
     "@react-navigation/native-stack": "*",
-    "react-native-safe-area-context": "3.2.0",
-    "react-native-geolocation-service": "*",
-    "@react-native-community/geolocation": "*"
+    "react-native-safe-area-context": "3.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0"
