@@ -24,9 +24,9 @@ def load_by_training():
     cwd = os.getcwd()
     files = os.listdir(cwd)
     print("Files in %r: %s" % (cwd, files))
-    data_path = cwd+"/KNN_model/df-4_wl-3s_19.1.2022.csv"
+    data_path = cwd+"/KNN_model/DataFrame_26_01_22.csv"
     data = pd.read_csv(data_path)
-    variables = ["RMS","RMS_filt","Zero-Cross","Zero-Cross_filt","Spectral_centroid","Spectral_centroid_filt","Spectral_slope","Spectral_slope_filt","Spectral_spread","Spectral_spread_filt","STD","STD_filt"]
+    variables = ["RMS","RMS_filt","Zero_Cross","Zero_Cross_filt","Spectral_centroid","Spectral_centroid_filt","Spectral_spread","Spectral_spread_filt","STD","STD_filt","kurt_filt"]
 
     X,y=getSamplesAndLabels(data,variables,"Label")
 
