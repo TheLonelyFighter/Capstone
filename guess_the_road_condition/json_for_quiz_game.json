@@ -1,8 +1,8 @@
 {
     "question": [
-      "Q1. Guess the Road Condition! (First sound to guess)",
-      "Q2. Guess the Road Condition! (Second sound to guess)",
-      "Q3. Guess the Road Condition! (Third sound to guess)"
+      "Q1. What is the road condition of sound 1?",
+      "Q2. What is the road condition of sound 2?",
+      "Q3. What is the road condition of sound 3?"
     ],
     "answer": [
       1,
