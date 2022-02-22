@@ -40,7 +40,7 @@ class Quiz:
         result = f"Score: {score}%"
 
         mb.showinfo(
-            "Result", f"{result}\n{correct}\n{wrong}\n\n The Correct answers were: \n 1. Gravel \n 2. Wet Asphalt \n 3. Dry Asphalt")
+            "Result", f"{result}\n{correct}\n{wrong}\n\n The Correct answers were: \n 1.Dry Gravel \n 2. Wet Asphalt \n 3. Dry Asphalt \n 4.Snow \n 5. Ice \n 6. Wet Gravel")
 
     def check_ans(self, q_no):
 
@@ -108,27 +108,29 @@ class Quiz:
 
         title2.place(x=0, y=600)
 
-        """ def callback(event):
-        webbrowser.open_new(event.widget.cget("text")) """
 
     def radio_buttons(self):
 
         q_list = []
         y_pos = 270
         x_pos = 140
-        while len(q_list) < 3:
+        while len(q_list) < 6:
             radio_btn = Radiobutton(gui, text=" ", variable=self.opt_selected,
                                     value=len(q_list)+1, font=("ariel", 14))
 
             q_list.append(radio_btn)
-            # print(len(q_list)) #debug
             radio_btn.place(x=x_pos, y=y_pos)
             if len(q_list) == 1:
-                x_pos += 100
-                print(len(q_list))
+                x_pos += 150
             elif len(q_list) == 2:
                 x_pos += 150
-                print(len(q_list))
+            elif len(q_list) == 3:
+                y_pos +=40
+                x_pos -= 300
+            elif len(q_list) == 4:
+                x_pos += 150
+            elif len(q_list) == 5:
+                x_pos +=150
         return q_list
 
 
@@ -157,24 +159,35 @@ question = (data['question'])
 options = (data['options'])
 answer = (data['answer'])
 
-# print(len(question),len(options),len(answer))
 
 quiz = Quiz()
 
 
-def play_gravel():
-    pygame.mixer.music.load('gravel.wav')
-    pygame.mixer.music.play()
+def play_dry_gravel():
+    pygame.mixer.music.load('dry_gravel.wav')
+    pygame.mixer.music.play(-1)
 
 
 def play_wet_asphalt():
-    pygame.mixer.music.load('wet_asphalt.wav')
-    pygame.mixer.music.play()
+    pygame.mixer.music.load('wet_asphalt_new.wav')
+    pygame.mixer.music.play(-1)
 
 
 def play_dry_asphalt():
-    pygame.mixer.music.load('dry_asphalt.wav')
-    pygame.mixer.music.play()
+    pygame.mixer.music.load('dry_asphalt_new.wav')
+    pygame.mixer.music.play(-1)
+
+def play_ice():
+    pygame.mixer.music.load('ice.wav')
+    pygame.mixer.music.play(-1)  #continuous
+
+def play_snow():
+    pygame.mixer.music.load('snow.wav')
+    pygame.mixer.music.play(-1)
+
+def play_wet_gravel():
+    pygame.mixer.music.load('wet_gravel.wav')
+    pygame.mixer.music.play(-1)
 
 
 
@@ -188,9 +201,24 @@ button2 = Button(gui, text="Sound 2",
 button2.pack(pady=10)
 button2.place(x=300, y=100)
 button3 = Button(gui, text="Sound 1",
-                 command=play_gravel, width=20)
+                 command=play_dry_gravel, width=20)
 button3.pack(pady=15)
 button3.place(x=140, y=100)
+
+button6 = Button(gui, text="Sound 4",
+                 command=play_snow, width=20)
+button6.pack(pady=15)
+button6.place(x=140, y=130)
+
+button7 = Button(gui, text="Sound 5",
+                 command=play_ice, width=20)
+button7.pack(pady=15)
+button7.place(x=300, y=130)
+
+button7 = Button(gui, text="Sound 6",
+                 command=play_wet_gravel, width=20)
+button7.pack(pady=15)
+button7.place(x=460, y=130)
 
 
 button4 = Button(gui, text="Continue", command=unpause, width=15)
