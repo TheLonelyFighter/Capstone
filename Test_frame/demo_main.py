@@ -4,7 +4,8 @@ import os
 import time
 import joblib
 from preprocessing.get_features import get_features
-from KNN_model.load_model import load_by_training
+from KNN_model.load_model import load_by_training_knn
+from KNN_model.load_model import load_by_training_et
 from sklearn.neighbors import KNeighborsClassifier
 from scipy.signal import decimate
 
@@ -22,7 +23,7 @@ def main():
     #files = os.listdir(cwd)
     #print(files)
     #knn_classifier=joblib.load(cwd+'/KNN_model/knn_model.pkl' , mmap_mode ='r')
-    knn_classifier = load_by_training()
+    classifier = load_by_training_et()
     dev_index = 2
     print("Using device",p.get_device_info_by_index(dev_index))
     wav_output_filename = 'test1.wav' # name of .wav file
@@ -74,16 +75,16 @@ def main():
         time_ftr_xtrctn = time_ftr_xtrctn_end-time_ftr_xtrctn_start
         #print("features:",features)
         #Use knn to classify the audiosamples and other features i.e. temps, humidity, speed etc.
-        time_knn_start = time.time()
-        predicted_road_type=knn_classifier.predict([features])
-        time_knn_end = time.time()
-        time_knn = time_knn_end-time_knn_start
+        time_clf_start = time.time()
+        predicted_road_type=classifier.predict([features])
+        time_clf_end = time.time()
+        time_clf = time_clf_end-time_clf_start
         #print the road condition
         print("frame length:",len(decimated_signal))
         print("Time taken by decimation:        ",time_decimation,"seconds")
         print("Time taken by feature extraction:",time_ftr_xtrctn,"seconds")
-        print("Time taken by knn model:         ",time_knn,"seconds")
-        print("Total computation time:          ",time_knn+time_ftr_xtrctn+time_decimation,"seconds")
+        print("Time taken by ML model:         ",time_clf,"seconds")
+        print("Total computation time:          ",time_clf+time_ftr_xtrctn+time_decimation,"seconds")
         print(predicted_road_type[0])
         #print(test)
         #print(len(recordings))

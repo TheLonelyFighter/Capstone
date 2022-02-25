@@ -1,4 +1,5 @@
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.ensemble import ExtraTreesClassifier
 import pandas as pd
 import math as math
 import os
@@ -20,7 +21,7 @@ def getSamplesAndLabels(data,variables,label):
             y.append(data[label][row])
         
     return x,y
-def load_by_training():
+def load_by_training_knn():
     cwd = os.getcwd()
     files = os.listdir(cwd)
     print("Files in %r: %s" % (cwd, files))
@@ -33,3 +34,17 @@ def load_by_training():
     knn=KNeighborsClassifier(n_neighbors=3)
     knn.fit(X,y)
     return knn
+
+def load_by_training_et():
+    cwd = os.getcwd()
+    files = os.listdir(cwd)
+    print("Files in %r: %s" % (cwd, files))
+    data_path = cwd+"/KNN_model/DataFrame_26_01_22.csv"
+    data = pd.read_csv(data_path)
+    variables = ["RMS","RMS_filt","Zero_Cross","Zero_Cross_filt","Spectral_centroid","Spectral_centroid_filt","Spectral_spread","Spectral_spread_filt","STD","STD_filt","kurt_filt"]
+
+    X,y=getSamplesAndLabels(data,variables,"Label")
+
+    et=ExtraTreesClassifier(n_estimators=100)
+    et.fit(X,y)
+    return et
