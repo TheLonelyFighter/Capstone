@@ -1,6 +1,7 @@
 # Capstone Project - Ice Riderzzz Team
 Real-time detection of road surface condition based on tire noise. A machine learning approach.
 
+Our project was the winner of the  [ICT Showroom 2022]([https://duckduckgo.com](https://www.ictshowroom.fi/2022-event/))
 
 # Video presentation of the Project
 
